@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/header" 
+	android:orientation="horizontal"
+	android:layout_width="match_parent"
+	android:layout_height="35dip"
+	android:gravity="center_vertical"
+	android:paddingLeft="5dip"
+	android:clickable="true">
+		
+	<ImageView 
+		android:id="@+id/appLogo" 
+		android:contentDescription="@string/logo"
+		android:src="@drawable/ic_launcher"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" />
+        
+    <TextView 
+		android:id="@+id/appName"
+		android:textIsSelectable="true"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:textSize="20sp"
+		android:typeface="serif"
+		android:fontFamily="bold"
+		android:text="@string/lurvberry"
+		android:paddingLeft="1dip" />
+       
+    <RelativeLayout
+		android:id="@+id/tabSelected" 
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:gravity="right|center_vertical"
+		android:paddingRight="5dip">
+			
+		<TextView 
+			android:id="@+id/title"
+			android:textIsSelectable="true"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:textSize="12sp"
+			android:paddingRight="5dip" />
+						    
+		<ImageView
+			android:id="@+id/icon" 
+			android:contentDescription="@string/logo"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"/>
+	
+	</RelativeLayout>
+</LinearLayout>
+    
