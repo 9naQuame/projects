@@ -113,6 +113,36 @@ public class PlayerFragment extends Fragment {
 			}
 		});
 		
+		/* Next button click event */
+		nextButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				if(currentSongIndex < (songsList.size() - 1)){
+					playSong(currentSongIndex + 1);
+					currentSongIndex = currentSongIndex + 1;
+				}
+				else{
+					playSong(0);
+					currentSongIndex = 0;
+				}
+			}
+		});
+		
+		/* Back button click event */
+		previousButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				if(currentSongIndex > 0){
+					playSong(currentSongIndex - 1);
+					currentSongIndex = currentSongIndex - 1;
+				}
+				else{
+					playSong(songsList.size() - 1);
+					currentSongIndex = songsList.size() - 1;
+				}
+			}
+		});
+		
      	return view;
 	}
 	
