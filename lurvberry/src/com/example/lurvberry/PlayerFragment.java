@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PlayerFragment extends Fragment {
 	
@@ -140,6 +141,45 @@ public class PlayerFragment extends Fragment {
 					playSong(songsList.size() - 1);
 					currentSongIndex = songsList.size() - 1;
 				}
+			}
+		});
+		
+		/* Repeat button click event */
+		repeatButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				if(isRepeat){
+					isRepeat = false;
+					Toast.makeText(getActivity(), "Repeat is OFF", Toast.LENGTH_SHORT).show();
+					repeatButton.setImageResource(R.drawable.btn_repeat);
+				}
+				else{
+					isRepeat = true;
+					Toast.makeText(getActivity(), "Repeat is ON", Toast.LENGTH_SHORT).show();
+					// make shuffle to false
+					isShuffle = false; 
+					repeatButton.setImageResource(R.drawable.btn_repeat_focused);
+					shuffleButton.setImageResource(R.drawable.btn_shuffle);
+				}	
+			}
+		});
+		
+		/* Shuffle button click event */
+		shuffleButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				if(isShuffle){
+					isShuffle = false;
+					Toast.makeText(getActivity(), "Shuffle is OFF", Toast.LENGTH_SHORT).show();
+					shuffleButton.setImageResource(R.drawable.btn_shuffle);
+				}else{
+					isShuffle= true;
+					Toast.makeText(getActivity(), "Shuffle is ON", Toast.LENGTH_SHORT).show();
+					// make repeat to false
+					isRepeat = false;
+					shuffleButton.setImageResource(R.drawable.btn_shuffle_focused);
+					repeatButton.setImageResource(R.drawable.btn_repeat);
+				}	
 			}
 		});
 		

@@ -33,14 +33,14 @@ public class MainActivity extends FragmentActivity {
 			public void onTabChanged(String tabId) {
 				FragmentManager tab =   getSupportFragmentManager();
 				PlayerFragment player = (PlayerFragment) tab.findFragmentByTag("player");
-				SettingFragment songs = (SettingFragment) tab.findFragmentByTag("songs");
+				SongFragment songs = (SongFragment) tab.findFragmentByTag("songs");
 				SettingFragment settings = (SettingFragment) tab.findFragmentByTag("setting");
 				
 				FragmentTransaction tabChange = tab.beginTransaction();
 				
 				if(player != null) tabChange.detach(player);
-				if(songs != null) tabChange.detach(player);
-				if(settings != null) tabChange.detach(player);
+				if(songs != null) tabChange.detach(songs);
+				if(settings != null) tabChange.detach(settings);
 				
 				if(tabId.equalsIgnoreCase("player")){
 					if(player == null) tabChange.add(R.id.selectedTabcontent,new PlayerFragment(), "player");						
@@ -49,14 +49,14 @@ public class MainActivity extends FragmentActivity {
 				}
 				
 				else if(tabId.equalsIgnoreCase("songs")){
-					if(songs == null) tabChange.add(R.id.selectedTabcontent,new SettingFragment(), "songs");						
-					else tabChange.attach(player);
+					if(songs == null) tabChange.add(R.id.selectedTabcontent,new SongFragment(), "songs");						
+					else tabChange.attach(songs);
 					title.setText("Songs");
 				}
 				
 				else{
 					if(settings == null) tabChange.add(R.id.selectedTabcontent,new SettingFragment(), "setting");						
-					else tabChange.attach(player);	
+					else tabChange.attach(settings);	
 					title.setText("Settings");
 				}
 					
