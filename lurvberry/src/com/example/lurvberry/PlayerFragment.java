@@ -91,6 +91,28 @@ public class PlayerFragment extends Fragment {
 			}
 		});
 		
+		/* Forward button click event */
+		forwardButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				int currentPosition = player.getCurrentPosition();
+				if(currentPosition + seekForwardTime <= player.getDuration()) 
+					player.seekTo(currentPosition + seekForwardTime);
+				else player.seekTo(player.getDuration());
+			}
+		});
+		
+		/* Rewind button click event */
+		rewindButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				int currentPosition = player.getCurrentPosition();
+				if(currentPosition - seekRewindTime >= 0)
+					player.seekTo(currentPosition - seekRewindTime);
+				else player.seekTo(0);
+			}
+		});
+		
      	return view;
 	}
 	
