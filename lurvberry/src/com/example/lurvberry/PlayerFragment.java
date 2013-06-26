@@ -33,7 +33,7 @@ public class PlayerFragment extends Fragment {
 
 	private MediaPlayer player;
 	
-	private Handler PlayerHandler = new Handler();
+	private Handler playerHandler = new Handler();
 	private SongManager songManager;
 	private Utilities utils;
 	private int seekForwardTime = 5000;
@@ -204,7 +204,7 @@ public class PlayerFragment extends Fragment {
 			songProgressBar.setMax(100);
 			
 			// Updating progress bar
-			//updateProgressBar();			
+			updateProgressBar();			
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalStateException e) {
@@ -213,5 +213,25 @@ public class PlayerFragment extends Fragment {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/* Update timer on seekbar */
+	public void updateProgressBar() {
+		playerHandler.postDelayed(playerUpdateTimeTask, 100);        
+    }
+	
+	/* Background Runnable thread */
+	private Runnable playerUpdateTimeTask = new Runnable() {
+		   public void run() {
+			   long totalDuration = player.getDuration();
+			   long currentDuration = player.getCurrentPosition();
+			  
+			   songTotalDurationLabel.setText("" + utils.milliSecondsToTimer(totalDuration));
+			   songCurrentDurationLabel.setText("" + utils.milliSecondsToTimer(currentDuration));
+			   
+			   int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
+			   songProgressBar.setProgress(progress);
+			   // Running this thread after 100 milliseconds
+		       playerHandler.postDelayed(this, 100);
+		   }
+		};
 }
