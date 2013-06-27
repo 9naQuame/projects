@@ -3,8 +3,10 @@ package com.example.lurvberry;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Random;
 
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -16,7 +18,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PlayerFragment extends Fragment {
+public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, OnCompletionListener {
 	
 	private ImageButton playButton;
 	private ImageButton forwardButton;
@@ -118,7 +120,13 @@ public class PlayerFragment extends Fragment {
 		nextButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				if(currentSongIndex < (songsList.size() - 1)){
+				if(isShuffle){
+					Random rand = new Random();
+					currentSongIndex = rand.nextInt((songsList.size() - 1) - 0 + 1) + 0;
+					playSong(currentSongIndex);
+				}
+				
+				else if(currentSongIndex < (songsList.size() - 1)){
 					playSong(currentSongIndex + 1);
 					currentSongIndex = currentSongIndex + 1;
 				}
@@ -221,17 +229,61 @@ public class PlayerFragment extends Fragment {
 	
 	/* Background Runnable thread */
 	private Runnable playerUpdateTimeTask = new Runnable() {
-		   public void run() {
-			   long totalDuration = player.getDuration();
-			   long currentDuration = player.getCurrentPosition();
+	   public void run() {
+		   long totalDuration = player.getDuration();
+		   long currentDuration = player.getCurrentPosition();
 			  
-			   songTotalDurationLabel.setText("" + utils.milliSecondsToTimer(totalDuration));
-			   songCurrentDurationLabel.setText("" + utils.milliSecondsToTimer(currentDuration));
+		   songTotalDurationLabel.setText("" + utils.milliSecondsToTimer(totalDuration));
+		   songCurrentDurationLabel.setText("" + utils.milliSecondsToTimer(currentDuration));
 			   
-			   int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
-			   songProgressBar.setProgress(progress);
-			   // Running this thread after 100 milliseconds
-		       playerHandler.postDelayed(this, 100);
-		   }
-		};
+		   int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
+		   songProgressBar.setProgress(progress);
+		   // Running this thread after 100 milliseconds
+	       playerHandler.postDelayed(this, 100);
+	   }
+	};
+	
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+	}
+	
+	/* When user starts moving the progress handler */
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {
+		// remove message Handler from updating progress bar
+		playerHandler.removeCallbacks(playerUpdateTimeTask);
+    }
+	
+	/* When user stops moving the progress hanlder */
+	@Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+		playerHandler.removeCallbacks(playerUpdateTimeTask);
+		int totalDuration = player.getDuration();
+		int currentPosition = utils.progressToTimer(seekBar.getProgress(), totalDuration);
+		
+		player.seekTo(currentPosition);
+		
+		updateProgressBar();
+    }
+	
+	/* On Song Playing completed */
+	@Override
+	public void onCompletion(MediaPlayer arg0) {
+		if(isRepeat) playSong(currentSongIndex);
+		else if(isShuffle){
+			Random rand = new Random();
+			currentSongIndex = rand.nextInt((songsList.size() - 1) - 0 + 1) + 0;
+			playSong(currentSongIndex);
+		} 
+		else{
+			if(currentSongIndex < (songsList.size() - 1)){
+				playSong(currentSongIndex + 1);
+				currentSongIndex = currentSongIndex + 1;
+			}
+			else{
+				playSong(0);
+				currentSongIndex = 0;
+			}
+		}
+	}
 }
