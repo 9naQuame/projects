@@ -125,7 +125,6 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
 					currentSongIndex = rand.nextInt((songsList.size() - 1) - 0 + 1) + 0;
 					playSong(currentSongIndex);
 				}
-				
 				else if(currentSongIndex < (songsList.size() - 1)){
 					playSong(currentSongIndex + 1);
 					currentSongIndex = currentSongIndex + 1;
