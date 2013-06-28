@@ -69,8 +69,8 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
 		utils = new Utilities();
 		
 		//Listeners Very Important
-		//songProgressBar.setOnSeekBarChangeListener(this); 
-		//player.setOnCompletionListener(this);
+		songProgressBar.setOnSeekBarChangeListener(this); 
+		player.setOnCompletionListener(this);
 		
 		songsList = songManager.getSongs();
 		playSong(0);

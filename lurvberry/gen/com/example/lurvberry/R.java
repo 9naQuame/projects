@@ -108,6 +108,8 @@ public final class R {
         public static final int player_footer=0x7f030004;
         public static final int player_header=0x7f030005;
         public static final int player_rounded_corner=0x7f030006;
+        public static final int playlist=0x7f030007;
+        public static final int playlist_item=0x7f030008;
     }
     public static final class menu {
         public static final int main=0x7f070000;
