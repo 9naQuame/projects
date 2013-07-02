@@ -3,12 +3,16 @@ package com.example.lurvberry;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 
@@ -37,11 +41,8 @@ public class SongFragment extends ListFragment{
 
 		setListAdapter(adapter);
 /*
-		// selecting single ListView item
 		ListView lv = getListView();
-		// listening to single listitem click
 		lv.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
