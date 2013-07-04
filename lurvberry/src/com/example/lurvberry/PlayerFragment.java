@@ -132,7 +132,8 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
 						playSong(currentSongIndex);
 					}
 					else if(previousShuffleIndex < (shuffledList.size() - 1)){
-						currentSongIndex = shuffledList.get(previousShuffleIndex + 1);
+						previousShuffleIndex = previousShuffleIndex + 1;
+						currentSongIndex = shuffledList.get(previousShuffleIndex);
 						playSong(currentSongIndex);
 					}
 					else{
@@ -150,20 +151,21 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
 					if(currentSongIndex < (songsList.size() - 1)){
 						playSong(currentSongIndex + 1);
 						currentSongIndex = currentSongIndex + 1;
-					}
-					else{
-						playSong(0);
-						currentSongIndex = 0;
-					}
+				}
+				
+				else{
+					playSong(0);
+					currentSongIndex = 0;
 				}
 			}
+		}
 		});
 		
 		/* Back button click event */
 		previousButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				if(isShuffle && !shuffledList.isEmpty() && previousShuffleIndex > 0){
+				if(isShuffle && !shuffledList.isEmpty() && previousShuffleIndex >= 0){
 					currentSongIndex = shuffledList.get(previousShuffleIndex);
 					playSong(currentSongIndex);
 					previousShuffleIndex = previousShuffleIndex - 1;
