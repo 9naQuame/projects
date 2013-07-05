@@ -308,11 +308,31 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
 	public void onCompletion(MediaPlayer arg0) {
 		if(isRepeat) playSong(currentSongIndex);
 		else if(isShuffle){
-			Random rand = new Random();
-			currentSongIndex = rand.nextInt((songsList.size() - 1) - 0 + 1) + 0;
-			playSong(currentSongIndex);
+			if(shuffledList.isEmpty()){
+				Random rand = new Random();
+				previousShuffleIndex = 0;
+				shuffledList.add(currentSongIndex);
+				currentSongIndex = rand.nextInt((songsList.size() - 1) - 0 + 1) + 0;
+				playSong(currentSongIndex);
+			}
+			else if((previousShuffleIndex + 1) < (shuffledList.size() - 1)){
+				previousShuffleIndex = previousShuffleIndex + 1;
+				currentSongIndex = shuffledList.get(previousShuffleIndex + 1);
+				playSong(currentSongIndex);
+			}
+			else{
+				Random rand = new Random();
+				if((previousShuffleIndex + 1) != (shuffledList.size() - 1))
+					shuffledList.add(currentSongIndex);
+				previousShuffleIndex = previousShuffleIndex + 1;
+				currentSongIndex = rand.nextInt((songsList.size() - 1) - 0 + 1) + 0;
+				playSong(currentSongIndex);
+			}
 		} 
 		else{
+			shuffledList.clear();
+			previousShuffleIndex = 0;
+			
 			if(currentSongIndex < (songsList.size() - 1)){
 				playSong(currentSongIndex + 1);
 				currentSongIndex = currentSongIndex + 1;
