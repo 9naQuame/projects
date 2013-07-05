@@ -131,14 +131,15 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
 						currentSongIndex = rand.nextInt((songsList.size() - 1) - 0 + 1) + 0;
 						playSong(currentSongIndex);
 					}
-					else if(previousShuffleIndex < (shuffledList.size() - 1)){
+					else if((previousShuffleIndex + 1) < (shuffledList.size() - 1)){
 						previousShuffleIndex = previousShuffleIndex + 1;
-						currentSongIndex = shuffledList.get(previousShuffleIndex);
+						currentSongIndex = shuffledList.get(previousShuffleIndex + 1);
 						playSong(currentSongIndex);
 					}
 					else{
 						Random rand = new Random();
-						shuffledList.add(currentSongIndex);
+						if((previousShuffleIndex + 1) != (shuffledList.size() - 1))
+							shuffledList.add(currentSongIndex);
 						previousShuffleIndex = previousShuffleIndex + 1;
 						currentSongIndex = rand.nextInt((songsList.size() - 1) - 0 + 1) + 0;
 						playSong(currentSongIndex);
@@ -166,6 +167,8 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
 			@Override
 			public void onClick(View arg0) {
 				if(isShuffle && !shuffledList.isEmpty() && previousShuffleIndex >= 0){
+					if(previousShuffleIndex == (shuffledList.size() - 1))
+						shuffledList.add(currentSongIndex);
 					currentSongIndex = shuffledList.get(previousShuffleIndex);
 					playSong(currentSongIndex);
 					previousShuffleIndex = previousShuffleIndex - 1;
