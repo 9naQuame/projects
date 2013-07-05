@@ -44,6 +44,7 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
 	private int previousShuffleIndex = 0;
 	private boolean isShuffle = false;
 	private boolean isRepeat = false;
+	private boolean isPlaying = false;
 	private ArrayList<Integer> shuffledList = new ArrayList<Integer>();
 	private ArrayList<LinkedHashMap<String, String>> songsList = new ArrayList<LinkedHashMap<String, String>>();
 	
@@ -85,12 +86,14 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
 				if(player.isPlaying()){
 					if(player!=null){
 						player.pause();
+						isPlaying = false;
 						playButton.setImageResource(R.drawable.btn_play);
 					}
 				}
 				else{
 					if(player!=null){
 						player.start();
+						isPlaying = true;
 						playButton.setImageResource(R.drawable.btn_pause);
 					}
 				}
@@ -230,19 +233,24 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
 		
      	return view;
 	}
-	
+
 	/* Function to play a song */
 	public void  playSong(int songIndex){
 		try {
         	player.reset();
         	player.setDataSource(songsList.get(songIndex).get("songPath"));
         	player.prepare();
-        	player.start();
+        	
+        	if(isPlaying){
+        		player.start();
+        		playButton.setImageResource(R.drawable.btn_pause);
+        	}
+        	else playButton.setImageResource(R.drawable.btn_play);
  
         	String songTitle = songsList.get(songIndex).get("songTitle");
         	songTitleLabel.setText(songTitle);
 			
-			playButton.setImageResource(R.drawable.btn_pause);
+			
 			
 			// set Progress bar values
 			songProgressBar.setProgress(0);
