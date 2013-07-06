@@ -45,8 +45,8 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
 	private boolean isShuffle = false;
 	private boolean isRepeat = false;
 	private boolean isPlaying = false;
-	private ArrayList<Integer> shuffledList = new ArrayList<Integer>();
-	private ArrayList<LinkedHashMap<String, String>> songsList = new ArrayList<LinkedHashMap<String, String>>();
+	private static ArrayList<Integer> shuffledList = new ArrayList<Integer>();
+	private static ArrayList<LinkedHashMap<String, String>> songsList = new ArrayList<LinkedHashMap<String, String>>();
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -234,6 +234,22 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
      	return view;
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("currentSongIndex", currentSongIndex);
+		outState.putInt("previousShuffleIndex", previousShuffleIndex);
+		outState.putIntegerArrayList("shuffledList", shuffledList);
+	}
+	
+	@Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+      super.onActivityCreated(savedInstanceState);
+      // Restore UI state from the savedInstanceState.
+      // This bundle has also been passed to onCreate.
+      //  playerList = savedInstanceState.getStringArrayList("Playlist");
+	}
+	
 	/* Function to play a song */
 	public void  playSong(int songIndex){
 		try {
