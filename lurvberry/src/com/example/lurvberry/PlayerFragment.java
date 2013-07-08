@@ -266,8 +266,6 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
         	String songTitle = songsList.get(songIndex).get("songTitle");
         	songTitleLabel.setText(songTitle);
 			
-			
-			
 			// set Progress bar values
 			songProgressBar.setProgress(0);
 			songProgressBar.setMax(100);
