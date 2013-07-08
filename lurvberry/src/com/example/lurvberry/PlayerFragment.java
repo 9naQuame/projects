@@ -245,9 +245,9 @@ public class PlayerFragment extends Fragment implements SeekBar.OnSeekBarChangeL
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
       super.onActivityCreated(savedInstanceState);
-      // Restore UI state from the savedInstanceState.
-      // This bundle has also been passed to onCreate.
-      //  playerList = savedInstanceState.getStringArrayList("Playlist");
+      shuffledList = savedInstanceState.getIntegerArrayList("shuffledList");
+      currentSongIndex = savedInstanceState.getInt("currentSongIndex");
+      previousShuffleIndex = savedInstanceState.getInt("previousShuffleIndex");
 	}
 	
 	/* Function to play a song */
