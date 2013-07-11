@@ -12,7 +12,6 @@ public class SettingFragment extends ListFragment{
 	
     /** An array of items to display in ArrayList */
 	 String setting[] = new String[]{
-             "",
              "Lion",
              "Snow Leopard",
              "Leopard",
